@@ -2,6 +2,7 @@ import { ethers } from "ethers";
 import React, { useEffect, useState } from 'react';
 import './styles/App.css';
 import twitterLogo from './assets/twitter-logo.svg';
+import mijoNft from './utils/MijoNFT.json';
 
 // Constants
 const TWITTER_HANDLE = 'panteramodern';
@@ -71,7 +72,7 @@ const App = () => {
   }
 
   const askContractToMintNft = async () => {
-  const CONTRACT_ADDRESS = "0xEde87BdFB05DcD5Cbb705f20baE93D6964343c27";
+  const CONTRACT_ADDRESS = "0xb16FCC6c227bAC8f39919326630a74C49e9C9d06";
 
   try {
     const { ethereum } = window;
@@ -79,7 +80,7 @@ const App = () => {
     if (ethereum) {
       const provider = new ethers.providers.Web3Provider(ethereum);
       const signer = provider.getSigner();
-      const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer);
+      const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, mijoNft.abi, signer);
 
       console.log("Going to pop wallet now to pay gas...")
       let nftTxn = await connectedContract.makeMijoNFT();
@@ -122,7 +123,7 @@ const App = () => {
           {currentAccount === "" ? (
             renderNotConnectedContainer()
           ) : (
-            <button onClick={null} className="cta-button connect-wallet-button">
+            <button onClick={askContractToMintNft} className="cta-button connect-wallet-button">
               Mint NFT
             </button>
           )}
